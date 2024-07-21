@@ -1,0 +1,13 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.customerSupportTicketRouter = void 0;
+const hono_1 = require("hono");
+const customer_support_tickets_controller_1 = require("./customer-support-tickets.controller");
+const zod_validator_1 = require("@hono/zod-validator");
+const validators_1 = require("../validators");
+exports.customerSupportTicketRouter = new hono_1.Hono();
+exports.customerSupportTicketRouter.get("/customer-support-tickets", customer_support_tickets_controller_1.listTickets);
+exports.customerSupportTicketRouter.get("/customer-support-tickets/:id", customer_support_tickets_controller_1.getTicketById);
+exports.customerSupportTicketRouter.post("/customer-support-tickets", (0, zod_validator_1.zValidator)("json", validators_1.customerSupportTicketSchema), customer_support_tickets_controller_1.createTicket);
+exports.customerSupportTicketRouter.put("/customer-support-tickets/:id", (0, zod_validator_1.zValidator)("json", validators_1.customerSupportTicketSchema), customer_support_tickets_controller_1.updateTicket);
+exports.customerSupportTicketRouter.delete("/customer-support-tickets/:id", customer_support_tickets_controller_1.deleteTicket);

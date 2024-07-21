@@ -1,0 +1,13 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.vehicleSpecRouter = void 0;
+const hono_1 = require("hono");
+const vehicleSpecifications_controller_1 = require("./vehicleSpecifications.controller");
+const zod_validator_1 = require("@hono/zod-validator");
+const validators_1 = require("../validators");
+exports.vehicleSpecRouter = new hono_1.Hono();
+exports.vehicleSpecRouter.get("/vehicle-specifications", vehicleSpecifications_controller_1.listVehicleSpecifications);
+exports.vehicleSpecRouter.get("/vehicle-specifications/:id", vehicleSpecifications_controller_1.getVehicleSpecificationById);
+exports.vehicleSpecRouter.post("/vehicle-specifications", (0, zod_validator_1.zValidator)("json", validators_1.vehicleSpecificationSchema), vehicleSpecifications_controller_1.createVehicleSpecification);
+exports.vehicleSpecRouter.put("/vehicle-specifications/:id", (0, zod_validator_1.zValidator)("json", validators_1.vehicleSpecificationSchema), vehicleSpecifications_controller_1.updateVehicleSpecification);
+exports.vehicleSpecRouter.delete("/vehicle-specifications/:id", vehicleSpecifications_controller_1.deleteVehicleSpecification);

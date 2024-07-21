@@ -1,0 +1,13 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.vehicleRouter = void 0;
+const hono_1 = require("hono");
+const vehicles_controller_1 = require("./vehicles.controller");
+const zod_validator_1 = require("@hono/zod-validator");
+const validators_1 = require("../validators");
+exports.vehicleRouter = new hono_1.Hono();
+exports.vehicleRouter.get("/vehicles", vehicles_controller_1.listVehicles);
+exports.vehicleRouter.get("/vehicles/:id", vehicles_controller_1.getVehicleById);
+exports.vehicleRouter.post("/vehicles", (0, zod_validator_1.zValidator)("json", validators_1.vehicleSchema), vehicles_controller_1.createVehicle);
+exports.vehicleRouter.put("/vehicles/:id", (0, zod_validator_1.zValidator)("json", validators_1.vehicleSchema), vehicles_controller_1.updateVehicle);
+exports.vehicleRouter.delete("/vehicles/:id", vehicles_controller_1.deleteVehicle);

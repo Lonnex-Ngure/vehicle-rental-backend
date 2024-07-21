@@ -1,0 +1,14 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.authenticationRouter = void 0;
+const hono_1 = require("hono");
+const authentications_controller_1 = require("./authentications.controller");
+const zod_validator_1 = require("@hono/zod-validator");
+const validators_1 = require("../validators");
+const bearAuth_1 = require("../middleware/bearAuth");
+exports.authenticationRouter = new hono_1.Hono();
+exports.authenticationRouter.get("/authentications", bearAuth_1.adminRoleAuth, authentications_controller_1.listAuthentications);
+exports.authenticationRouter.get("/authentications/:id", bearAuth_1.adminRoleAuth, authentications_controller_1.getAuthenticationById);
+exports.authenticationRouter.post("/authentications", bearAuth_1.adminRoleAuth, (0, zod_validator_1.zValidator)("json", validators_1.authenticationSchema), authentications_controller_1.createAuthentication);
+exports.authenticationRouter.put("/authentications/:id", bearAuth_1.adminRoleAuth, (0, zod_validator_1.zValidator)("json", validators_1.authenticationSchema), authentications_controller_1.updateAuthentication);
+exports.authenticationRouter.delete("/authentications/:id", bearAuth_1.adminRoleAuth, authentications_controller_1.deleteAuthentication);

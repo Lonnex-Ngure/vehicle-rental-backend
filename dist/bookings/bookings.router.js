@@ -1,0 +1,13 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.bookingRouter = void 0;
+const hono_1 = require("hono");
+const bookings_controller_1 = require("./bookings.controller");
+const zod_validator_1 = require("@hono/zod-validator");
+const validators_1 = require("../validators");
+exports.bookingRouter = new hono_1.Hono();
+exports.bookingRouter.get("/bookings", bookings_controller_1.listBookings);
+exports.bookingRouter.get("/bookings/:id", bookings_controller_1.getBookingById);
+exports.bookingRouter.post("/bookings", (0, zod_validator_1.zValidator)("json", validators_1.bookingSchema), bookings_controller_1.createBooking);
+exports.bookingRouter.put("/bookings/:id", (0, zod_validator_1.zValidator)("json", validators_1.bookingSchema), bookings_controller_1.updateBooking);
+exports.bookingRouter.delete("/bookings/:id", bookings_controller_1.deleteBooking);

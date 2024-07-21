@@ -1,0 +1,13 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.fleetManagementRouter = void 0;
+const hono_1 = require("hono");
+const fleet_management_controller_1 = require("./fleet-management.controller");
+const zod_validator_1 = require("@hono/zod-validator");
+const validators_1 = require("../validators");
+exports.fleetManagementRouter = new hono_1.Hono();
+exports.fleetManagementRouter.get("/fleet-management", fleet_management_controller_1.listFleetItems);
+exports.fleetManagementRouter.get("/fleet-management/:id", fleet_management_controller_1.getFleetItemById);
+exports.fleetManagementRouter.post("/fleet-management", (0, zod_validator_1.zValidator)("json", validators_1.fleetManagementSchema), fleet_management_controller_1.createFleetItem);
+exports.fleetManagementRouter.put("/fleet-management/:id", (0, zod_validator_1.zValidator)("json", validators_1.fleetManagementSchema), fleet_management_controller_1.updateFleetItem);
+exports.fleetManagementRouter.delete("/fleet-management/:id", fleet_management_controller_1.deleteFleetItem);

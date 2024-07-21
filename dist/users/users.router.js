@@ -1,0 +1,13 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.userRouter = void 0;
+const hono_1 = require("hono");
+const users_controller_1 = require("./users.controller");
+const zod_validator_1 = require("@hono/zod-validator");
+const validators_1 = require("../validators");
+exports.userRouter = new hono_1.Hono();
+exports.userRouter.get("/users", users_controller_1.listUsers);
+exports.userRouter.get("/users/:id", users_controller_1.getUserById);
+exports.userRouter.post("/users", (0, zod_validator_1.zValidator)("json", validators_1.userSchema), users_controller_1.createUser);
+exports.userRouter.put("/users/:id", (0, zod_validator_1.zValidator)("json", validators_1.userSchema), users_controller_1.updateUser);
+exports.userRouter.delete("/users/:id", users_controller_1.deleteUser);

@@ -1,0 +1,15 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.paymentRouter = void 0;
+const hono_1 = require("hono");
+const payments_controller_1 = require("./payments.controller");
+const zod_validator_1 = require("@hono/zod-validator");
+const validators_1 = require("../validators");
+exports.paymentRouter = new hono_1.Hono();
+exports.paymentRouter.get("/payments", payments_controller_1.listPayments);
+exports.paymentRouter.get("/payments/:id", payments_controller_1.getPaymentById);
+exports.paymentRouter.post("/payments", (0, zod_validator_1.zValidator)("json", validators_1.paymentSchema), payments_controller_1.createPayment);
+exports.paymentRouter.put("/payments/:id", (0, zod_validator_1.zValidator)("json", validators_1.paymentSchema), payments_controller_1.updatePayment);
+exports.paymentRouter.delete("/payments/:id", payments_controller_1.deletePayment);
+exports.paymentRouter.post("/payments/create-payment-intent", payments_controller_1.createPaymentIntent);
+exports.paymentRouter.post("/payments/process", payments_controller_1.processPayment);
